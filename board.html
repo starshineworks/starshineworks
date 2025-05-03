@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Draggable Boxes on Parameterized NxM Board with Headers</title>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <style>
+    #board {
+      display: grid;
+      gap: 5px;
+      width: max-content;
+      margin: 20px;
+      background: #eee;
+      padding: 10px;
+    }
+    .cell {
+      border: 1px solid #ccc;
+      position: relative;
+      background: #fafafa;
+    }
+    .header-cell {
+      border: 1px solid #ccc;
+      background: #dbeafe;
+      font-weight: bold;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .box {
+      border-radius: 6px;
+      position: relative;
+      cursor: move;
+      z-index: 10;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 16px;
+      text-shadow: 1px 1px 2px #00000055;
+      box-sizing: border-box;
+      padding: 0 18px 0 0; /* space for delete button */
+      user-select: none;
+      overflow: hidden;
+    }
+    .delete-btn {
+      position: absolute;
+      top: 2px;
+      right: 4px;
+      color: #fff;
+      background: #e74c3c;
+      border: none;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      font-size: 12px;
+      line-height: 14px;
+      text-align: center;
+      cursor: pointer;
+      z-index: 20;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #controls {
+      margin: 20px;
+    }
+    #boxColor {
+      width: 50px;
+      height: 30px;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+  <div id="controls">
+    <input type="text" id="boxText" placeholder="Box Text" maxlength="10">
+    <input type="color" id="boxColor" value="#3498db">
+    <button id="createBoxBtn">Create Box</button>
+  </div>
+  <div id="board"></div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+  <script>
+    // === PARAMETERS: Set these variables as needed ===
+    const columns = 7;      // Number of columns (not counting header)
+    const rows = 24;        // Number of rows (not counting header)
+    const cellWidth = 160;  // Cell width in px
+    const cellHeight = 40;  // Cell height in px
+
+    // Header labels (leave empty to use numbers)
+    const headerRowLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    const headerColLabels = [
+      "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
+      "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30",
+      "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30",
+      "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30"
+    ];
+    // ================================================
+
+    function createBoard(cols, rows, width, height) {
+      $('#board').empty();
+      $('#board').css({
+        'display': 'grid',
+        'grid-template-columns': `repeat(${cols + 1}, ${width}px)`,
+        'grid-template-rows': `repeat(${rows + 1}, ${height}px)`
+      });
+
+      for (let r = 0; r <= rows; r++) {
+        for (let c = 0; c <= cols; c++) {
+          if (r === 0 && c === 0) {
+            // Top-left corner (empty)
+            $('#board').append(`<div class="header-cell" style="width:${width}px; height:${height}px;"></div>`);
+          } else if (r === 0) {
+            // Header row
+            let label = headerRowLabels[c - 1] !== undefined ? headerRowLabels[c - 1] : c;
+            $('#board').append(`<div class="header-cell" style="width:${width}px; height:${height}px;">${label}</div>`);
+          } else if (c === 0) {
+            // Header column
+            let label = headerColLabels[r - 1] !== undefined ? headerColLabels[r - 1] : r;
+            $('#board').append(`<div class="header-cell" style="width:${width}px; height:${height}px;">${label}</div>`);
+          } else {
+            // Regular cell
+            $('#board').append(`<div class="cell" data-cell="${(r-1)*cols + (c-1)}" style="width:${width}px; height:${height}px;"></div>`);
+          }
+        }
+      }
+
+      // Make cells droppable
+      $('.cell').droppable({
+        accept: '.box',
+        tolerance: 'intersect',
+        drop: function(event, ui) {
+          $(this).append(ui.draggable);
+          ui.draggable.css({top: 5, left: 5, position: 'relative'});
+        }
+      });
+    }
+
+    // Initial board
+    createBoard(columns, rows, cellWidth, cellHeight);
+
+    // Create boxes and make them draggable
+    $('#createBoxBtn').click(function() {
+      let text = $('#boxText').val() || 'Box';
+      let color = $('#boxColor').val() || '#3498db';
+
+      // Find the first empty cell
+      let $emptyCell = $('.cell').filter(function() {
+        return $(this).find('.box').length === 0;
+      }).first();
+      if ($emptyCell.length === 0) {
+        alert('No empty cells left!');
+        return;
+      }
+
+      // Box size is slightly smaller than cell
+      let boxWidth = cellWidth - 10;
+      let boxHeight = cellHeight - 10;
+      let $box = $(`<div class="box" style="width:${boxWidth}px; height:${boxHeight}px; background:${color};"></div>`);
+      $box.text(text);
+
+      // Add delete button
+      let $deleteBtn = $('<button class="delete-btn" title="Delete box">&times;</button>');
+      $box.append($deleteBtn);
+
+      $box.draggable({
+        revert: 'invalid',
+        containment: '#board',
+        stack: '.box'
+      });
+      $emptyCell.append($box);
+    });
+
+    // Event delegation for delete button
+    $('#board').on('click', '.delete-btn', function(e) {
+      e.stopPropagation();
+      $(this).closest('.box').remove();
+    });
+  </script>
+</body>
+</html> 

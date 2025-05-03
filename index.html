@@ -1,3 +1,111 @@
-<html>
-Ciao a tutti !!!
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Full Page Background Image with Lato Fonts and Fixed Divs</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="ofavicon.png">
+  <!-- Import Lato font from Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Lato', Arial, sans-serif;
+    }
+    body {
+      min-height: 100vh;
+      min-width: 100vw;
+      background-image: url('cropped1.gif');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+    .lato-big {
+      font-family: 'Lato', Arial, sans-serif;
+      font-size: 6em;
+      font-weight: 900;
+    }
+    .lato-med {
+      font-family: 'Lato', Arial, sans-serif;
+      font-size: 3em;
+      font-weight: 700;
+    }
+    .lato-small {
+      font-family: 'Lato', Arial, sans-serif;
+      font-size: 1em;
+      font-weight: 400;
+    }
+    .top-div {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      background: rgba(0,0,0,0);
+      color: #fff;
+      text-align: center;
+      padding: 1em 0;
+      z-index: 100;
+    }
+    .bottom-div {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      background: rgba(0,0,0,0);
+      color: #fff;
+      text-align: center;
+      padding: 1em 0;
+      z-index: 100;
+    }
+    .center-div {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0);
+      color: #fff;
+      text-align: center;
+      padding: 2em 3em;
+      border-radius: 1em;
+      z-index: 50;
+    }
+    .logo {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      width: 200px;
+      height: 40px;
+      z-index: 200;
+      background: rgba(255,255,255,0.7);
+      border-radius: 8px;
+      padding: 0px;
+      box-shadow: 0 2px 8px #0003;
+    }
+  </style>
+</head>
+<body>
+  <!-- Logo in top left -->
+  <img src="orion4.png" alt="Logo" class="logo">
+
+  <div class="top-div lato-med">
+    This is the top div
+  </div>
+  <div class="center-div">
+    <div class="lato-big">
+      Starshine Works
+    </div>
+    <div>
+      &nbsp;
+    </div>
+    <div class="lato-med">
+      Coming Soon
+    </div>
+  </div>
+  <div class="bottom-div lato-small">
+    This is the bottom div
+  </div>
+</body>
 </html>
