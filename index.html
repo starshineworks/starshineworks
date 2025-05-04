@@ -23,6 +23,11 @@
       background-repeat: no-repeat;
       background-attachment: fixed;
     }
+    .lato-huge {
+      font-family: 'Lato', Arial, sans-serif;
+      font-size: 9em;
+      font-weight: 1000;
+    }
     .lato-big {
       font-family: 'Lato', Arial, sans-serif;
       font-size: 6em;
@@ -35,7 +40,12 @@
     }
     .lato-small {
       font-family: 'Lato', Arial, sans-serif;
-      font-size: 0.5em;
+      font-size: 1.5em;
+      font-weight: 300;
+    }
+    .lato-micro {
+      font-family: 'Lato', Arial, sans-serif;
+      font-size: 0.7em;
       font-weight: 200;
     }
     .top-div {
@@ -61,6 +71,7 @@
       z-index: 100;
     }
     .center-div {
+      width: 80vw;
       position: absolute;
       top: 50%;
       left: 50%;
@@ -84,31 +95,85 @@
       padding: 0px;
       box-shadow: 0 2px 8px #0003;
     }
+    .top-nav {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 300;
+      background: rgba(0,0,0,0.6);
+      padding: 0.5em 2em;
+      border-bottom-left-radius: 1em;
+    }
+    .top-nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 2em;
+    }
+    .top-nav li {
+      display: inline;
+    }
+    .top-nav a {
+      color: #fff;
+      text-decoration: none;
+      font-family: 'Lato', Arial, sans-serif;
+      font-size: 1.1em;
+      font-weight: 700;
+      transition: color 0.2s;
+    }
+    .top-nav a:hover {
+      color: #ffd700;
+    }
   </style>
 </head>
 <body>
   <!-- Logo in top left -->
   <img src="orion4.png" alt="Logo" class="logo">
-
-  <div class="top-div lato-med">
+  <div class="top-div lato-small">
+    <nav class="top-nav">
+      <ul>
+        <li><a href="https://starshineworks.org">Home</a></li>
+        <li><a href="https://starshineworks.org/about">About</a></li>
+        <li><a href="https://starshineworks.org/news">News</a></li>
+        <li><a href="https://starshineworks.org/contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="top-div lato-small">
     2025
   </div>
   <div class="center-div">
-    <div class="lato-big">
+    <div>
+      &nbsp;&nbsp;<br>
+    </div>
+    <div class="lato-huge">
       Starshine Works
     </div>
     <div>
-      &nbsp;
+      &nbsp;&nbsp;<br>
     </div>
-    <div class="lato-med">
+    <div class="lato-big">
       Coming Soon
     </div>
-    <div class="lato-med" style="color:white;font-family:Lato, sans-serif" >Contact us<br>
-      <a style="color:white;font-family:Lato, sans-serif" href="mailto:contact@starshineworks.org">contact@starshineworks.org
-      </a>
+    <div>
+      &nbsp;&nbsp;<br>
+      &nbsp;&nbsp;<br>
+      &nbsp;&nbsp;<br>
+      &nbsp;&nbsp;<br>
+      &nbsp;&nbsp;<br>
+    </div>
+    <div class="lato-small" style="color:white;font-family:Lato, sans-serif" >Contact us<br>
+      <a style="color:white;font-family:Lato, sans-serif" href="mailto:contact@starshineworks.org">contact@starshineworks.org</a>
+    </div>
+    <div>
+      &nbsp;&nbsp;<br>
+    </div>
+    <div>
+      &nbsp;&nbsp;<br>
     </div>
   </div>
-  <div class="bottom-div lato-small">
+  <div class="bottom-div lato-micro">
    (C) 2023 Starshine Works. All rights reserved.
   </div>
 </body>
